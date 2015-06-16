@@ -1,0 +1,24 @@
+general.true=Vrai
+general.false=Faux
+
+updater.gui.switchSnapshots=Activer/désactiver les snapshots
+updater.gui.name=Nom : %s
+updater.gui.modid=ID du mod : %s
+updater.gui.latestVersion=Dernière version :
+updater.gui.version=Version : %s
+updater.gui.selectedVersion=Version sélectionnée :
+updater.gui.userType=Type d'utilisateur : %s
+updater.gui.changes=Quoi d'neuf (docteur) : %s
+updater.gui.selectLatestV=Ajouter la dernière version
+updater.gui.selectCurrentV=Ajouter la version sélectionnée
+updater.gui.showSelectedMods=Afficher la liste des versions sélectionnés
+updater.gui.selectAll=Sélectionner toutes les versions recommandées
+updater.gui.deselectAll=Tout déselectionner
+updater.gui.deselect=Déselectionner
+updater.gui.downloadAll=Télécharger toutes les versions
+updater.gui.download=Télécharger la version séléctionnée
+updater.gui.autoExit=Quitter le jeu automatiquement après le téléchargement
+updater.gui.downloading=Téléchargement...
+
+updater.userType.0=Utilisateur
+updater.userType.1=Développeur

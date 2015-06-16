@@ -1,0 +1,16 @@
+[
+{
+  "modid": "supdater",
+  "name": "Updater",
+  "description": "Mods updater from SCAREX",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "http://scarex.on.vg/Updater",
+  "updateUrl": "",
+  "authorList": ["SCAREX"],
+  "credits": "You <3",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

@@ -50,3 +50,12 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+# Custom
+eclipse/
+.project
+.gradle/
+.classpath
+bin/
+.settings/
+gradle/
