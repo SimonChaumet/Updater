@@ -113,7 +113,7 @@ public class Updater
 	public static HashMap<String, Grouper<ModVersions, Version>> filesToDownload = new HashMap<String, Grouper<ModVersions, Version>>();
 
 	public String getVersionFileURL() {
-		return "http://scarex.on.vg/Updater/versions.json";
+		return "http://scarex.fr/Updater/versions.json";
 	}
 
 	public String getUpdaterVersion() {
@@ -149,22 +149,27 @@ public class Updater
 								String stringUrl = (String) clazz.getDeclaredMethod("getVersionFileURL").invoke(mod.getMod());
 								URL versionFile = new URL(stringUrl);
 
-								InputStream is = null;
-								try {
-									HttpURLConnection con = (HttpURLConnection) versionFile.openConnection(Proxy.NO_PROXY);
-									con.setConnectTimeout(15000);
-									con.setReadTimeout(15000);
+								if (isRemoteFileAccessibleWithType(versionFile, "application/json")) {
 
-									is = con.getInputStream();
-									ModVersions modV = gson.fromJson(IOUtils.toString(is, Charsets.UTF_8), ModVersions.class);
-									modV.setMODID(mod.getModId());
-									modV.setVersionFileLink(stringUrl);
-									modV.setCurrentVersion(currentVersion);
-									modsList.add(modV);
-								} catch (Exception e) {
-									logger.warn("Couldn't get version file with given url : " + versionFile, e);
+									InputStream is = null;
+									try {
+										HttpURLConnection con = (HttpURLConnection) versionFile.openConnection(Proxy.NO_PROXY);
+										con.setConnectTimeout(15000);
+										con.setReadTimeout(15000);
+
+										is = con.getInputStream();
+										ModVersions modV = gson.fromJson(IOUtils.toString(is, Charsets.UTF_8), ModVersions.class);
+										modV.setMODID(mod.getModId());
+										modV.setVersionFileLink(stringUrl);
+										modV.setCurrentVersion(currentVersion);
+										modsList.add(modV);
+									} catch (Exception e) {
+										logger.warn("Couldn't get version file with given url : " + versionFile, e);
+									}
+									IOUtils.closeQuietly(is);
+								} else {
+									logger.warn("Couldn't get version file with given url (not a json object) : " + versionFile);
 								}
-								IOUtils.closeQuietly(is);
 							} catch (Exception e) {
 								logger.warn("Couldn't retrieve mod's informations from mod " + mod.getName() + "(" + clazz.getCanonicalName() + ")", e);
 							}
@@ -176,12 +181,12 @@ public class Updater
 		t.start();
 	}
 
-	public static boolean isRemoteFileAccessible(URL url) {
+	public static boolean isRemoteFileAccessibleWithType(URL url, String type) {
 		try {
 			HttpURLConnection.setFollowRedirects(false);
 			HttpURLConnection con = (HttpURLConnection) url.openConnection();
 			con.setRequestMethod("HEAD");
-			return con.getResponseCode() == HttpURLConnection.HTTP_OK;
+			return con.getResponseCode() == HttpURLConnection.HTTP_OK && (con.getContentType().equals(type) || type.equals("*"));
 		} catch (Throwable t) {
 			return false;
 		}
@@ -374,7 +379,7 @@ public class Updater
 	{
 		private static final Pattern pattern = Pattern.compile("(?i)(\\d+)((?:\\.\\d+)*)([a-zA-Z])?(-snapshot)?(-src|-source)?");
 		private static final Pattern patternMC = Pattern.compile("(?i)(\\d+)((?:\\.\\d+)*)([a-zA-Z1-9\\.-]*)$");
-		public static final Version NULL_VERSION = new Version("0", 'a', true, true, new int[]{0});
+		public static final Version NULL_VERSION = new Version("0", 'a', true, true, new int[] { 0 });
 		private String name;
 		private String changes;
 		private String downloadLink;
@@ -547,9 +552,9 @@ public class Updater
 			}
 			return output + releases[releases.length - 1] + (releaseChar == 'a' ? "" : releaseChar) + (snapshot ? "-snapshot" : "") + (sourceFile ? "-source" : "");
 		}
-		
+
 		public boolean equals(Object input) {
-			if (input instanceof Version) return this.toName().equals(((Version)input).toName());
+			if (input instanceof Version) return this.toName().equals(((Version) input).toName());
 			return false;
 		}
 	}

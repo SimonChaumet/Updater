@@ -5,7 +5,7 @@
   "description": "Mods updater from SCAREX",
   "version": "${version}",
   "mcversion": "${mcversion}",
-  "url": "http://scarex.on.vg/Updater",
+  "url": "http://scarex.fr/Updater",
   "updateUrl": "",
   "authorList": ["SCAREX"],
   "credits": "You <3",

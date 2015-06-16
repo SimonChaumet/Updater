@@ -134,7 +134,7 @@ public class GuiSelectedMods extends GuiScreen
 				public void run() {
 					try {
 						URL link = entry.getValue().getFirstValue().getDownloadLinkForVersion(entry.getValue().getSecondValue(), null);
-						if (Updater.isRemoteFileAccessible(link)) {
+						if (Updater.isRemoteFileAccessibleWithType(link, "*")) {
 							URLConnection con = link.openConnection();
 							long l = con.getContentLengthLong();
 							GuiSelectedMods.this.addMaxSize(l);

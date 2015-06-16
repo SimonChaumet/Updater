@@ -96,7 +96,7 @@ public class GuiUpdater extends GuiScreen
 			break;
 		case 6:
 			URL latestVersionLink = Updater.modsList.get(this.selectedModIndex).getDownloadLinkForVersion(Updater.modsList.get(this.selectedModIndex).getLatestVersionForUser((byte) 0, this.allowSnapshots), Updater.modsList.get(this.selectedModIndex).getMCVersionForLatestVersion());
-			if (Updater.isRemoteFileAccessible(latestVersionLink)) {
+			if (Updater.isRemoteFileAccessibleWithType(latestVersionLink, "*")) {
 				ModVersions m = Updater.modsList.get(this.selectedModIndex);
 				Updater.filesToDownload.put(m.getModID(), new Grouper<ModVersions, Version>(m, m.getLatestVersionForUser((byte) 0, this.allowSnapshots)));
 			} else {
@@ -106,7 +106,7 @@ public class GuiUpdater extends GuiScreen
 			break;
 		case 7:
 			URL link = Updater.modsList.get(this.selectedModIndex).getDownloadLinkForVersion(this.selectedVersion, this.selectedMCVersion);
-			if (Updater.isRemoteFileAccessible(link)) {
+			if (Updater.isRemoteFileAccessibleWithType(link, "*")) {
 				ModVersions m = Updater.modsList.get(this.selectedModIndex);
 				Updater.filesToDownload.put(m.getModID(), new Grouper<ModVersions, Version>(m, this.selectedVersion));
 			} else {
